@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<library>
+    <book id="1">
+        <title>The Great Gatsby</title>
+        <author>F. Scott Fitzgerald</author>
+        <genre>Fiction</genre>
+        <price>10.99</price>
+        <published>1925</published>
+    </book>
+    <book id="2">
+        <title>1984</title>
+        <author>George Orwell</author>
+        <genre>Dystopian</genre>
+        <price>8.99</price>
+        <published>1949</published>
+    </book>
+    <book id="3">
+        <title>To Kill a Mockingbird</title>
+        <author>Harper Lee</author>
+        <genre>Fiction</genre>
+        <price>7.99</price>
+        <published>1960</published>
+    </book>
+    <book id="4">
+        <title>The Road</title>
+        <author>Cormac McCarthy</author>
+        <genre>Post-apocalyptic</genre>
+        <price>12.99</price>
+        <published>2006</published>
+    </book>
+</library>
+
+<!--EJERCICIOS DE XPATH-->
+
+<!--Para seleccionar todos los titulos de los libros
+    /library/book/title o //title -->
+
+<!--Para encontrar los libros cuyo precio es mayor a 10€
+    //book[price>10]-->
+
+<!--Selecciona el autor del libro con el id='2'
+    //author[@id='2']-->
+
+<!--Selecciona los géneros únicos sin repetir
+   distinct-values(//genre) -->
+
+<!--Obtener el titulo y el precio de todos los libros publicados despues de 1950
+    //book[published>1950] /(title|price)-->
+
+
+<!--EJERCICIOS DE XQUERY-->
+
+<!--Lista de todos los titulos y autores de todos los libros
+Se puede hacer de dos maneras:
+1. for $book in //book
+    return $book/(title | author)
+2. for $book in //book
+    return
+    <book>{$book/title,$book/author}</book>-->
+
+<!--Listado de libros cuyo genero sea fiction
+se puede hacer de dos maneras:
+1. for $book in //book
+    return $book[genre='Fiction']
+2. for $book in //book[genre='Fiction']
+    return 
+    <fiction_book>{$book/title}</fiction_book>  con esta solo nos da los titulos-->
+
+<!--Encuentra el libro mas caro y cual es su precio
+let $masCaro := max(//price)
+for $book in //book[price=$masCaro]
+    return 
+    <caro>{$book/title,$book/price}</caro>
+
+con la funcion let estamos deduciendo cuakl es el precio mas caro
+y con la funcion for estamos extrayendo cual es el libro que tiene
+ese precio mas caro-->
+
+<!--Haz un html con un listado de todos los libros con todas sus caracteristicas del xml
+<html>
+	<head>
+    	<title>Listado de libros</title>
+    </head>
+    <body>
+    	Primer libro
+        <ul>
+        	{
+            	for $book in //book[1]
+                return 
+                <li>{$book/title/text()} escrito por {$book/author/text()} con un precio de {$book/price/text()}</li>
+            }
+        </ul>
+        Segundo libro
+        <ul>
+        	{
+            	for $book in //book[2]
+                return 
+                <li>{$book/title/text()} escrito por {$book/author/text()} con un precio de {$book/price/text()}</li>
+            }
+        </ul>
+        Tercer libro
+        <ul>
+        	{
+            	for $book in //book[3]
+                return 
+                <li>{$book/title/text()} escrito por {$book/author/text()} con un precio de {$book/price/text()}</li>
+            }
+        </ul>
+        Segundo libro
+        <ul>
+        	{
+            	for $book in //book[4]
+                return 
+                <li>{$book/title/text()} escrito por {$book/author/text()} con un precio de {$book/price/text()}</li>
+            }
+        </ul>
+    </body>
+</html>
+El ejemplo anterior nos da libro por libro, si queremos que nos de directamente todos los libros de golpe 
+podemos usar el siguiente formato:
+<html>
+  <body>
+    <h1>Book List</h1>
+    <ul>
+      {
+        for $book in //book
+        return <li>{$book/title/text()} by {$book/author/text()} - ${$book/price/text()}</li>
+      }
+    </ul>
+  </body>
+</html>
+-->
+
+<!-- -->
+
+<!-- -->
+
+<!-- -->
+
+<!-- -->
