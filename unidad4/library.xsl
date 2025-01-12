@@ -23,6 +23,9 @@
                                 <xsl:if test="price > 10">
                                     <xsl:attribute name="style">background-color: yellow; font-weight: bold;</xsl:attribute>
                                 </xsl:if> <!--1. Agregar otro texto al encabezado-->
+                                <xsl:if test="genre = 'Fiction'">
+                                    <xsl:attribute name="style">color:blue;</xsl:attribute>
+                                </xsl:if> <!--para indicar que si el genero es fiction sea letra azul-->
                                 <td><xsl:value-of select="title"/></td>
                                 <td><xsl:value-of select="author"/></td>
                                 <td><xsl:value-of select="genre"/></td>
